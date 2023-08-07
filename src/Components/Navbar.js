@@ -1,4 +1,4 @@
-import React , {useEffect} from "react";
+import React , {useEffect, useState} from "react";
 
 import img from "../assets/images/velocity_logo.png";
 import { NavLink } from "react-router-dom";
@@ -6,13 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function Navbar() {
+  const [name ,  setName] = useState("")
  
   const navigate = useNavigate();
 
   useEffect(() => {
     const loggeduser = localStorage.getItem("authenticated");
+    const user = localStorage.getItem("username")
     if (!loggeduser) {
       navigate("/login");
+    }
+    else{
+      setName(user)
     }
   }, []);
 
@@ -20,7 +25,7 @@ export default function Navbar() {
     console.log("click");
     localStorage.removeItem("authenticated");
     navigate("/login");
-    toast.success("Logout Success...");
+    
   }
 
   return (
@@ -45,7 +50,7 @@ export default function Navbar() {
               <div className="d-flex pr-2">
                 <div className="dropdown d-inline-block">
                   <span className="d-none d-xl-inline-block ml-1" key="t-henry">
-                    Welcome Henry
+                    {name}
                   </span>
                   &nbsp;&nbsp;
                   <NavLink to="/login" className="" onClick={handleLogout}>

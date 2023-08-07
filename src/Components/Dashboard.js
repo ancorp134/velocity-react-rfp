@@ -8,12 +8,13 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";
 
-export default function Dashboard() {
+export default function Dashboard({data}) {
 
+  console.log(data)
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar ></Navbar>
       <div className="main-content">
         <div className="page-content">
           <div className="container-fluid">

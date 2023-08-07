@@ -37,7 +37,7 @@ function Login() {
       .then((res) => {
         if (res.data.response === "success") {
           localStorage.setItem("authenticated", res.data.token);
-
+          localStorage.setItem("username" , res.data.name);
           navigate("/dashboard");
         } else {
           toast.error(res.data.error);
