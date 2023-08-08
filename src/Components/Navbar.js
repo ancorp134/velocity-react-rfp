@@ -24,6 +24,7 @@ export default function Navbar() {
   function handleLogout() {
     console.log("click");
     localStorage.removeItem("authenticated");
+    localStorage.removeItem("username");
     navigate("/login");
     
   }
@@ -50,7 +51,7 @@ export default function Navbar() {
               <div className="d-flex pr-2">
                 <div className="dropdown d-inline-block">
                   <span className="d-none d-xl-inline-block ml-1" key="t-henry">
-                    {name}
+                    {name.split(' ')[0]}
                   </span>
                   &nbsp;&nbsp;
                   <NavLink to="/login" className="" onClick={handleLogout}>

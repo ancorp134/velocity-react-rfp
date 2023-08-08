@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export default function RegisterVendor() {
+  const [Categories, setCategories] = useState("");
+
+  function handleCategories(e) {
+    setCategories(e.target.value);
+    console.log(Categories);
+  }
+
   return (
     <>
       <div className="home-btn d-none d-sm-block">
@@ -153,6 +160,7 @@ export default function RegisterVendor() {
                               multiple
                               id="Categories"
                               name="Categories"
+                              onSelect={handleCategories}
                             >
                               <option value="">All Categories</option>
                               <option value="1">Software</option>
@@ -160,6 +168,7 @@ export default function RegisterVendor() {
                               <option value="3">Office Furniture</option>
                               <option value="4">Stationery</option>
                             </select>
+                            <p>{Categories}</p>
                           </div>
                         </div>
 
@@ -179,8 +188,8 @@ export default function RegisterVendor() {
               <div className="mt-5 text-center">
                 <div>
                   <p>
-                    &copy; Copyright <i className="mdi mdi-heart text-danger"></i>{" "}
-                    RFP System
+                    &copy; Copyright{" "}
+                    <i className="mdi mdi-heart text-danger"></i> RFP System
                   </p>
                 </div>
               </div>

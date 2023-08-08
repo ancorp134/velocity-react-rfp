@@ -95,7 +95,7 @@ export default function Vendor() {
                             role="status"
                             aria-live="polite"
                           >
-                            Showing 1 to 5 of {data.length} entries
+                            Showing 1 to  {data.length} entries
                           </div>
                         </div>
                         <div className="col-sm-12 col-md-7 dataTables_wrapper ">

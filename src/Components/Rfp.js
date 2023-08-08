@@ -1,13 +1,39 @@
-import React from "react";
+import React, {useEffect , useState}from "react";
 
-import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";
+import RfpTable from "./rfpTable";
 
 export default function Rfp() {
+
+
+  const [data, setdata] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authenticated");
+    setLoading(true);
+    async function fetchData() {
+      await fetch("https://rfpdemo.velsof.com/api/rfp/all", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => res.json())
+        .then((d) => setdata(d.rfps))
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+
+    fetchData();
+  }, []);
+
+  
+
   return (
     <>
       <Navbar></Navbar>
@@ -31,6 +57,9 @@ export default function Rfp() {
               </div>
             </div>
 
+            {loading ? 
+            (<h1>Loading....</h1>)  
+           : (
             <div className="row">
               <div className="col-lg-12">
                 <div className="card">
@@ -69,70 +98,7 @@ export default function Rfp() {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <th scope="row">232/44234/4234</th>
-                            <td>Keyboard XYZ</td>
-                            <td>13-Oct-2023</td>
-                            <td>10,000</td>
-                            <td>10,0000</td>
-                            <td>
-                              <span className="badge badge-pill badge-success">
-                                Open
-                              </span>
-                            </td>
-                            <td>
-                              <a href="#" title="Close RFP" className="text-danger">
-                                <i className="mdi mdi-circle-off-outline"></i>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">232/44234/4234</th>
-                            <td>Keyboard XYZ</td>
-                            <td>13-Oct-2023</td>
-                            <td>10,000</td>
-                            <td>10,0000</td>
-                            <td>
-                              <span className="badge badge-pill badge-success">
-                                Open
-                              </span>
-                            </td>
-                            <td>
-                              <a href="#" title="Close RFP" className="text-danger">
-                                <i className="mdi mdi-circle-off-outline"></i>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">232/44234/4234</th>
-                            <td>Keyboard XYZ</td>
-                            <td>13-Oct-2023</td>
-                            <td>10,000</td>
-                            <td>10,0000</td>
-                            <td>
-                              <span className="badge badge-pill badge-success">
-                                Open
-                              </span>
-                            </td>
-                            <td>
-                              <a href="#" title="Close RFP" className="text-danger">
-                                <i className="mdi mdi-circle-off-outline"></i>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">232/44234/4234</th>
-                            <td>Keyboard XYZ</td>
-                            <td>13-Oct-2023</td>
-                            <td>10,000</td>
-                            <td>10,0000</td>
-                            <td>
-                              <span className="badge badge-pill badge-danger">
-                                Close
-                              </span>
-                            </td>
-                            <td></td>
-                          </tr>
+                          <RfpTable data={data}></RfpTable>
                         </tbody>
                       </table>
                     </div>
@@ -145,7 +111,7 @@ export default function Rfp() {
                           role="status"
                           aria-live="polite"
                         >
-                          Showing 1 to 5 of 5 entries
+                          Showing 1 to {data.length} entries
                         </div>
                       </div>
                       <div className="col-sm-12 col-md-7 dataTables_wrapper ">
@@ -201,6 +167,10 @@ export default function Rfp() {
                 </div>
               </div>
             </div>
+           )}
+
+
+
           </div>
         </div>
       </div>
