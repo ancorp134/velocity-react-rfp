@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function RfpTable({ data }) {
-  console.log(data);
+  
 
   return (
     <>
